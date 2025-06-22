@@ -16,9 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  # Updated to v4 for better compatibility
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Fetch full history
         
       - name: Configure Git
         run: |
@@ -32,5 +33,7 @@ jobs:
           git diff --staged --quiet || git commit -m "Daily commit - $(date '+%Y-%m-%d %H:%M')"
         
       - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git push
+          git push origin ${{ github.ref_name }}
