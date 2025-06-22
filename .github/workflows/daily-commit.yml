@@ -26,11 +26,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
         
+      - name: Pull latest changes
+        run: |
+          git pull origin ${{ github.ref_name }} --rebase
+        
       - name: Create daily commit
         run: |
           echo "Daily commit on $(date)" >> daily_commit.txt
           git add daily_commit.txt
-          git diff --staged --quiet || git commit -m "Daily commit - $(date '+%Y-%m-%d %H:%M')"
+          # Only commit if there are changes
+          if ! git diff --staged --quiet; then
+            git commit -m "Daily commit - $(date '+%Y-%m-%d %H:%M')"
+          else
+            echo "No changes to commit"
+          fi
         
       - name: Push changes
         env:
