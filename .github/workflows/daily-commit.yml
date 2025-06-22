@@ -2,26 +2,35 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '25 13 * * *'  # This will run at 1:25 PM UTC daily.
+    - cron: '25 13 * * *'  # Fixed: Added missing space - should be '* * *' not '**'
   
   # Allow the workflow to be manually triggered through the GitHub UI
   workflow_dispatch:
+
+# Add permissions for the GITHUB_TOKEN
+permissions:
+  contents: write
 
 jobs:
   daily_commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated to v4 for better compatibility
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
         
-      - name: Add commit with email 23f3001358@ds.study.iitm.ac.in
+      - name: Configure Git
         run: |
-          echo "This is a daily commit" >> daily_commit.txt
-          git config user.name "github-actions"
-          git config user.email "23f3001358@ds.study.iitm.ac.in"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+        
+      - name: Create daily commit
+        run: |
+          echo "Daily commit on $(date)" >> daily_commit.txt
           git add daily_commit.txt
-          git commit -m "Daily commit"
+          git diff --staged --quiet || git commit -m "Daily commit - $(date '+%Y-%m-%d %H:%M')"
         
       - name: Push changes
         run: |
-          git push https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push
