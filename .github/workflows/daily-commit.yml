@@ -14,7 +14,7 @@ jobs:
 
       - name: Add commit with email 23f3001358@ds.study.iitm.ac.in
         run: |
-          echo "This is a daily commit" >> daily_commit.txt
+          echo "This is a daily commit." >> daily_commit.txt
           git config user.name "github-actions"
           git config user.email "23f3001358@ds.study.iitm.ac.in"
           git add daily_commit.txt
