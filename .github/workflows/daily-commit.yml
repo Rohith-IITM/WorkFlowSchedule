@@ -7,6 +7,9 @@ on:
   # Allow the workflow to be manually triggered through the GitHub UI
   workflow_dispatch:
 
+permissions:
+  contents: write  # This ensures that the workflow can write to the repository (including pushing commits).
+
 jobs:
   daily_commit:
     runs-on: ubuntu-latest
