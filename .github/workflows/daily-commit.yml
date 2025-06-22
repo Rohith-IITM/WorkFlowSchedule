@@ -22,7 +22,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
         
-      - name: Create daily commit
+      - name: 23f3001358@ds.study.iitm.ac.in
         run: |
           echo "Daily commit on $(date)" >> daily_commit.txt
           git add daily_commit.txt
