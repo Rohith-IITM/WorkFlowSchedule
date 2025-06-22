@@ -1,9 +1,12 @@
 name: Daily Commit
 
-# The schedule will trigger the workflow daily at 8:00 AM UTC
+# Trigger the workflow on a cron schedule (daily at 1:25 PM UTC)
 on:
   schedule:
-    - cron: "25 13 * * *" # This will run at 8:00 AM UTC daily.
+    - cron: '25 13 * * *'  # This will run at 1:25 PM UTC daily.
+
+  # Allow the workflow to be manually triggered through the GitHub UI
+  workflow_dispatch:  # This enables the "Run workflow" button
 
 jobs:
   daily_commit:
@@ -11,10 +14,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+        
       - name: Add commit with email 23f3001358@ds.study.iitm.ac.in
         run: |
-          echo "This is a daily commit." >> daily_commit.txt
+          echo "This is a daily commit" >> daily_commit.txt
           git config user.name "github-actions"
           git config user.email "23f3001358@ds.study.iitm.ac.in"
           git add daily_commit.txt
