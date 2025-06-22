@@ -3,7 +3,7 @@ name: Daily Commit
 # The schedule will trigger the workflow daily at 8:00 AM UTC
 on:
   schedule:
-    - cron: "0 8 * * *" # This will run at 8:00 AM UTC daily.
+    - cron: "25 13 * * *" # This will run at 8:00 AM UTC daily.
 
 jobs:
   daily_commit:
